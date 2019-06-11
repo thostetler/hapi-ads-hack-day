@@ -43,6 +43,18 @@ const init = async () => {
 
   server.route({
     method: 'GET',
+    path:'/abs',
+    handler: (request, h) => {
+      return h.view('abstract', {
+        page: 'abstract',
+        title: 'abstract',
+        query: ''
+      });
+    }
+  });
+
+  server.route({
+    method: 'GET',
     path:'/search',
     handler: async (request, h) => {
       if (Object.keys(request.query).length === 0) {

@@ -5,21 +5,28 @@
   <hr class="hr">
   <div class="container">
     <% for (let doc of docs) { %>
-      <div class="box">
+      <a href="/abs/<%= doc.bibcode %>" class="box">
         <div class="media-content">
           <div class="content">
             <p>
-              <%= doc.bibcode %>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <%= doc.pubdate %>
-              <br>
+              <div class="flex">
+                <div class="w-25">
+                  <%= doc.bibcode %>
+                </div>
+                <div class="w-25">
+                  <%= doc.pubdate %>
+                </div>
+                <div class="w-25">
+                  cited: <%= doc.citation_count %>
+                </div>
+              </div>
               <strong><%= doc.title %></strong>
               <br>
               <%= doc.author %>
             </p>
           </div>
         </div>
-      </div>
+      </a>
     <% } %>
   </div>
 </section>
