@@ -4,6 +4,7 @@ const Vision = require('@hapi/vision');
 const Ejs = require('ejs');
 const http2 = require('http2');
 const api = require('./lib/api');
+const responseParser = require('./lib/responseParser');
 
 const options = {
   key: fs.readFileSync('./localhost-privkey.pem'),
@@ -49,7 +50,6 @@ const init = async () => {
         return
       }
       const { numFound, docs } = responseParser.parseAbstract(response.response);
-      console.log('docs: ',docs);
       return h.view('abstract', {
         page: 'abstract',
         title: 'abstract',
