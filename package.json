@@ -1,0 +1,25 @@
+{
+  "name": "hapi-ads-hack-day",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thostetler/hapi-ads-hack-day.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thostetler/hapi-ads-hack-day/issues"
+  },
+  "homepage": "https://github.com/thostetler/hapi-ads-hack-day#readme",
+  "dependencies": {
+    "hapi": "^18.1.0",
+    "http2": "^3.3.7"
+  }
+}
