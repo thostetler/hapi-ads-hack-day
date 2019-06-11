@@ -1,0 +1,23 @@
+<section class="section">
+  <p class="is-5">
+    <strong><%= numFound %></strong> records found
+  </p>
+  <hr class="hr">
+  <div class="container">
+    <% for (let doc of docs) { %>
+      <div class="box">
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <%= doc.bibcode %>
+              <br>
+              <strong><%= doc.title %></strong>
+              <br>
+
+            </p>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</section>

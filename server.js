@@ -33,6 +33,7 @@ const init = async () => {
     path:'/',
     handler: (request, h) => {
       return h.view('index', {
+        page: 'index',
         title: 'Hapi ' + request.server.version
       });
     }
@@ -41,7 +42,19 @@ const init = async () => {
   server.route({
     method: 'GET',
     path:'/search',
-    handler: (request, h) => {
+    handler: async (request, h) => {
+      if (Object.keys(request.query).length === 0) {
+        return h.redirect('/');
+      }
+      const response = await api.search(request.query);
+      const { numFound, docs } = response.response;
+      return h.view('search', {
+        query: request.query,
+        title: request.query.q + ' | Search',
+        page: 'search',
+        numFound,
+        docs
+      });
     }
   });
 
