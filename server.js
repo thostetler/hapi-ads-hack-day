@@ -48,6 +48,8 @@ const init = async () => {
         return h.redirect('/');
       }
       const response = await api.search(request.query);
+      console.log(response);
+
       if (!response.response) {
         return h.redirect('/');
       }
