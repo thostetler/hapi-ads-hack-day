@@ -1,34 +1,37 @@
-const Hapi = require('hapi');
 const fs = require('fs');
-const Http2 = require('http2');
-const server = new Hapi.Server();
+const Hapi = require('@hapi/hapi');
+const http2 = require('http2');
 
-// read certificate and private key
-const serverOptions = {
-  key: fs.readFileSync('localhost-privkey.pem'),
-  cert: fs.readFileSync('localhost-cert.pem')
+const options = {
+  key: fs.readFileSync('./localhost-privkey.pem'),
+  cert: fs.readFileSync('./localhost-cert.pem'),
 };
 
-// create http2 secure server listener
-const listener = Http2.createSecureServer(serverOptions);
+const init = async () => {
 
-// create a connection object with listener and other options
-server.connection({
-  listener,
-  port: '8000'
-});``
+  const server = Hapi.server({
+    listener: http2.createSecureServer(options),
+    host: 'localhost',
+    port: 3000,
+    tls: true
+  });
 
-// define routes
-server.route([{
-  method: 'GET',
-  path: '/ping',
-  handler: (request, reply) => {
-    reply('pong');
-  }
-}]);
+  server.route({
+    method: 'GET',
+    path:'/',
+    handler: (request, h) => {
+      return 'Hello World!';
+    }
+  });
 
-// start server
-server.start(err => {
-  if (err) console.error(err)
-  console.log(`Started ${server.connections.length} connections`)
+  await server.start();
+  console.log('Server running on %s', server.info.uri);
+};
+
+process.on('unhandledRejection', (err) => {
+
+  console.log(err);
+  process.exit(1);
 });
+
+init();
