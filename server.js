@@ -43,12 +43,18 @@ const init = async () => {
   server.route({
     method: 'GET',
     path:'/abs/{id}',
-    handler: (request, h) => {
-      api.abstractSearch(request.params.id);
+    handler: async (request, h) => {
+      const response = await api.abstractSearch(request.params.id);
+      if (!response.response) {
+        return
+      }
+      const { numFound, docs } = responseParser.parseAbstract(response.response);
+      console.log('docs: ',docs);
       return h.view('abstract', {
         page: 'abstract',
         title: 'abstract',
-        query: ''
+        query: request.query,
+        docs
       });
     }
   });

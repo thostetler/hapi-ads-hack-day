@@ -1,0 +1,26 @@
+<section class="section">
+  <hr class="hr">
+  <div class="container">
+      <% for (let doc of docs) { %>
+        <div>
+            <p>
+                <strong><%= doc.title %></strong>
+                <br>
+                <%= doc.author %>
+                <br>
+                <br>
+                <%= doc.abstract %>
+                <br>
+                <br>
+                <strong>Publication:</strong> <%= doc.pub_raw %>
+                <br>
+                <strong>Publication date:</strong> <%= doc.pubdate %>
+                <br>
+                <strong>Bibcode:</strong> <%= doc.bibcode %>
+                <br>
+                <a href="<%= "https://ui.adsabs.harvard.edu/abs/".concat(doc.bibcode) %>">Link to rich search version</a>
+            </p>
+        </div>
+      <% } %>
+  </div>
+</section>
