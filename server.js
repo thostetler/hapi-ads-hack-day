@@ -4,7 +4,6 @@ const Vision = require('@hapi/vision');
 const Ejs = require('ejs');
 const http2 = require('http2');
 const api = require('./lib/api');
-const responseParser = require('./lib/responseParser');
 
 const options = {
   key: fs.readFileSync('./localhost-privkey.pem'),
@@ -43,8 +42,9 @@ const init = async () => {
 
   server.route({
     method: 'GET',
-    path:'/abs',
+    path:'/abs/{id}',
     handler: (request, h) => {
+      api.abstractSearch(request.params.id);
       return h.view('abstract', {
         page: 'abstract',
         title: 'abstract',
@@ -56,26 +56,7 @@ const init = async () => {
   server.route({
     method: 'GET',
     path:'/search',
-    handler: async (request, h) => {
-      if (Object.keys(request.query).length === 0) {
-        return h.redirect('/');
-      }
-      const response = await api.search(request.query);
-      console.log(response.response.docs[0]);
-
-      if (!response.response) {
-        return h.redirect('/');
-      }
-
-      const { numFound, docs } = responseParser.parse(response.response);
-      return h.view('search', {
-        query: request.query,
-        title: request.query.q + ' | Search',
-        page: 'search',
-        numFound,
-        docs
-      });
-    }
+    handler: require('./lib/handlers/search')
   });
 
   await server.start();

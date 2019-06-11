@@ -6,15 +6,10 @@
   </div>
 
   <div class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/">
-        Home
-      </a>
-    </div>
-
     <% if (page === 'search') { %>
     <form class="navbar-item is-expanded" method="GET" action="/search">
       <input class="input" type="text" name="q" placeholder="search for something..." value="<%= query.q %>" autofocus>
+      <input type="hidden" name="s" value="date desc"/>
     </form>
     <% } %>
   </div>

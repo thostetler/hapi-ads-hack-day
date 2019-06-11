@@ -1,32 +1,70 @@
-<section class="section">
-  <p class="is-5">
-    <strong><%= numFound %></strong> records found
-  </p>
+<section class="section pt3">
+  <div class="flex">
+    <div class="is-5 flex-item">
+      <strong><%= numFound %></strong> record(s) found (<%= timing %> ms)
+    </div>
+  </div>
   <hr class="hr">
-  <div class="container">
-    <% for (let doc of docs) { %>
-      <a href="/abs/<%= doc.bibcode %>" class="box">
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <div class="flex">
-                <div class="w-25">
-                  <%= doc.bibcode %>
-                </div>
-                <div class="w-25">
-                  <%= doc.pubdate %>
-                </div>
-                <div class="w-25">
-                  cited: <%= doc.citation_count %>
-                </div>
-              </div>
-              <strong><%= doc.title %></strong>
-              <br>
-              <%= doc.author %>
+  <div class="flex">
+    <div class="flex-item w-20">
+      <div class="tile is-ancestor">
+        <div class="tile is-11 is-vertical is-parent">
+          <div class="tile is-child box pv2">
+            <p class="is-5">
+              <strong>Sort By</strong>
+              <span class="is-pulled-right">
+                <% if (selectedSortDir === 'asc') { %>
+                  <a href="/search?q=<%= query.q %>&s=<%= selectedSort %> desc" title="set sort direction">desc</a>
+                <% } else { %>
+                  <a href="/search?q=<%= query.q %>&s=<%= selectedSort %> asc" title="set sort direction">asc</a>
+                <% } %>
+              </span>
             </p>
+            <div class="flex flex-column">
+              <% for (let opt of sortOptions) {%>
+              <div class="flex-item">
+                <% if (selectedSort === opt.id) { %>
+                  <p class="has-text-weight-medium is-size-6"><%= opt.text %></p>
+                <% } else { %>
+                  <a href="/search?q=<%= query.q %>&s=<%= opt.id %> desc" title="<%= opt.desc %>" class="is-size-6">
+                    <%= opt.text %>
+                  </a>
+                <% } %>
+              </div>
+              <% } %>
+            </div>
           </div>
+          <!-- <div class="tile is-child box">
+            start
+          </div> -->
         </div>
-      </a>
-    <% } %>
+      </div>
+    </div>
+    <div class="flex-item w-80">
+      <% for (let doc of docs) { %>
+        <a href="/abs/<%= doc.bibcode %>" class="box pt1">
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <div class="flex">
+                  <div class="w-25">
+                    <%= doc.bibcode %>
+                  </div>
+                  <div class="w-25">
+                    <%= doc.pubdate %>
+                  </div>
+                  <div class="w-25">
+                    cited: <%= doc.citation_count %>
+                  </div>
+                </div>
+                <strong><%= doc.title %></strong>
+                <br>
+                <%= doc.author %>
+              </p>
+            </div>
+          </div>
+        </a>
+      <% } %>
+    </div>
   </div>
 </section>
