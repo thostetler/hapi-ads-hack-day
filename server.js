@@ -34,7 +34,8 @@ const init = async () => {
     handler: (request, h) => {
       return h.view('index', {
         page: 'index',
-        title: 'Hapi ' + request.server.version
+        title: 'Hapi ' + request.server.version,
+        query: ''
       });
     }
   });
@@ -47,6 +48,10 @@ const init = async () => {
         return h.redirect('/');
       }
       const response = await api.search(request.query);
+      if (!response.response) {
+        return h.redirect('/');
+      }
+
       const { numFound, docs } = response.response;
       return h.view('search', {
         query: request.query,
