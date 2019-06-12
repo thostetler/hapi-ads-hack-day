@@ -1,0 +1,32 @@
+extends layout
+block content
+  include header
+  section.section.main
+    .columns.is-3
+      .column.is-marginless.is-paddingless.has-text-weight-medium #{numFound} record(s) found (#{timing} ms)
+    .columns.is-3
+      aside.column.is-one-quarter
+        .tile.is-ancestor
+          .tile.is-vertical.is-parent
+            .tile.is-child.box
+              p.is-5
+                strong Sort By
+                span.is-pulled-right
+                  a() asc
+              each sort in sortOptions
+                p
+                  if sort.id === selectedSort
+                    p.has-text-weight-medium.is-size-6=sort.text
+                  else
+                    a(href=`/search?q=${query.q}&s=${sort.id} desc`).is-size-6()=sort.text
+      main.column
+        .tile.is-ancestor
+          .tile.is-vertical.is-parent
+            each doc in docs
+              a(href=`/abs/${doc.bibcode}`).tile.is-child.box
+                .columns.is-mobile
+                  .column=doc.bibcode
+                  .column.has-text-right=doc.pubdate
+                  .column.has-text-right cited: #{doc.citation_count}
+                p.has-text-weight-medium=doc.title
+                p=doc.author

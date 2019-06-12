@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon -w lib -w views -w server.js -e ejs,js server"
+    "start": "./node_modules/.bin/nodemon -w lib -w views -w server.js -e pug,js server"
   },
   "repository": {
     "type": "git",
@@ -19,12 +19,15 @@
   "homepage": "https://github.com/thostetler/hapi-ads-hack-day#readme",
   "dependencies": {
     "@hapi/hapi": "^18.3.1",
+    "@hapi/inert": "^5.2.0",
     "@hapi/vision": "^5.5.2",
     "axios": "^0.19.0",
     "bulma": "^0.7.5",
     "ejs": "^2.6.1",
     "hapi": "^18.1.0",
     "http2": "^3.3.7",
-    "nodemon": "^1.19.1"
+    "jade": "^1.11.0",
+    "nodemon": "^1.19.1",
+    "pug": "^2.0.3"
   }
 }

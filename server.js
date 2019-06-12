@@ -1,7 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const Hapi = require('@hapi/hapi');
+const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
-const Ejs = require('ejs');
+const Pug = require('pug');
 const http2 = require('http2');
 const api = require('./lib/api');
 const responseParser = require('./lib/responseParser');
@@ -21,12 +23,15 @@ const init = async () => {
   });
 
   await server.register(Vision);
+  await server.register(Inert);
 
   server.views({
-    engines: { ejs: Ejs },
+    engines: { pug: Pug },
     relativeTo: __dirname,
     path: 'views',
-    layout: 'layout'
+    compileOptions: {
+      basedir: path.join(__dirname, 'views')
+    }
   });
 
   server.route({
@@ -40,6 +45,16 @@ const init = async () => {
       });
     }
   });
+
+  server.route({
+    method: 'GET',
+    path: '/public/{param*}',
+    handler: {
+      directory: {
+        path: 'public'
+      }
+    }
+  })
 
   server.route({
     method: 'GET',
@@ -59,11 +74,7 @@ const init = async () => {
     }
   });
 
-  server.route({
-    method: 'GET',
-    path:'/search',
-    handler: require('./lib/handlers/search')
-  });
+  server.route({ method: 'GET', path:'/search', handler: require('./lib/handlers/search') });
 
   await server.start();
   console.log('Server running on %s', server.info.uri);
