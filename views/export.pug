@@ -1,0 +1,7 @@
+extends layout
+block content
+  include header
+  section.section
+    p.has-text-weight-medium.is-size-5 BibTeX
+    p
+    textarea.export-area(rows='20',cols='80') #{exportcite}

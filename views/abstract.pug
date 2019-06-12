@@ -22,14 +22,12 @@ block content
             .column
               a(href=`/search?q=references(${doc.bibcode})&s=first_author asc`) References
             .column
-              a(href=`https://ui.adsabs.harvard.edu/link_gateway/${doc.bibcode}/ESOURCE`) Sources
-        hr.hr
-        p.has-text-weight-medium.is-size-5 Full text sources
-          .columns
-            each source in sources
-              .column
-                a(href=`${source.url}`) #{source.link_type}
-        hr.hr
-        p.has-text-weight-medium.is-size-5 Export
-          p
-            a(href=`/abs/${doc.bibcode}/export`) BibTeX
+              a(href=`/abs/${doc.bibcode}/export`) BibTeX
+        if sources.length > 0
+          hr.hr
+          p.has-text-weight-medium.is-size-5 Full text sources
+            .columns
+              each source in sources
+                .column
+                  a(href=`${source.url}`) #{source.link_type}
+
