@@ -21,6 +21,11 @@ block content
             a(href=`/search?q=references(${doc.bibcode})&s=first_author asc`) References
             a(href=`https://ui.adsabs.harvard.edu/link_gateway/${doc.bibcode}/ESOURCE`) Sources
         hr.hr
+        p.has-text-weight-medium.is-size-5 Full text sources
+          p.linklist
+            each source in sources
+              a(href=`${source.url}`) #{source.link_type}
+        hr.hr
         p.has-text-weight-medium.is-size-5 Export
           p
             a(href=`/abs/${doc.bibcode}/export`) BibTeX
