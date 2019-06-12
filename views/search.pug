@@ -4,13 +4,6 @@ block content
   section.section.main
     .columns.is-3
       .column.is-marginless.is-paddingless.has-text-weight-medium.is-size-7-mobile #{numFound} records found (#{timing} ms)
-      column.is-right
-        nav.breadcrumb(aria-label="breadcrumbs")
-          ul
-            li
-              a(href="/") Home
-            li.is-active
-              a(href=`/search?q=${query.q}&s=${query.s}` aria-current="page") Search
     .columns.is-3
       aside.column.is-one-quarter
         .tile.is-ancestor
@@ -31,7 +24,7 @@ block content
           .tile.is-vertical.is-parent
             each doc in docs
               a(href=`/abs/${doc.bibcode}`).tile.is-child.box
-                .columns.is-mobile.is-size-7-mobile
+                .columns.is-mobile.is-size-7-mobile.is-variable.is-1-mobile
                   .column=doc.bibcode
                   .column.has-text-right=doc.pubdate
                   .column.has-text-right cited: #{doc.citation_count}

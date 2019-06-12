@@ -16,15 +16,19 @@ block content
         +sect('Bibcode', doc.bibcode)
         hr.hr
         p.has-text-weight-medium.is-size-5 Links
-          p.linklist
-            a(href=`/search?q=citations(${doc.bibcode})&s=first_author asc`) Citations (#{doc.citation_count})
-            a(href=`/search?q=references(${doc.bibcode})&s=first_author asc`) References
-            a(href=`https://ui.adsabs.harvard.edu/link_gateway/${doc.bibcode}/ESOURCE`) Sources
+          .columns
+            .column
+              a(href=`/search?q=citations(${doc.bibcode})&s=first_author asc`) Citations (#{doc.citation_count})
+            .column
+              a(href=`/search?q=references(${doc.bibcode})&s=first_author asc`) References
+            .column
+              a(href=`https://ui.adsabs.harvard.edu/link_gateway/${doc.bibcode}/ESOURCE`) Sources
         hr.hr
         p.has-text-weight-medium.is-size-5 Full text sources
-          p.linklist
+          .columns
             each source in sources
-              a(href=`${source.url}`) #{source.link_type}
+              .column
+                a(href=`${source.url}`) #{source.link_type}
         hr.hr
         p.has-text-weight-medium.is-size-5 Export
           p

@@ -25,6 +25,17 @@ const init = async () => {
   await server.register(Vision);
   await server.register(Inert);
 
+  await server.register({
+    plugin: require('@hapi/yar'),
+    options: {
+      storeBlank: false,
+      cookieOptions: {
+          password: 'the-password-must-be-at-least-32-characters-long',
+          isSecure: true
+      }
+    },
+  });
+
   server.views({
     engines: { pug: Pug },
     relativeTo: __dirname,
@@ -60,6 +71,7 @@ const init = async () => {
     method: 'GET',
     path:'/abs/{id}',
     handler: async (request, h) => {
+      await api.confirmSessionToken(request.yar);
       const response = await api.abstractSearch(request.params.id);
       if (!response.response) {
         return
@@ -85,6 +97,7 @@ const init = async () => {
       method: 'GET',
       path: '/abs/{id}/export',
       handler: async (request, h) => {
+        await api.confirmSessionToken(request.yar);
         const response = await api.exportSearch(request.params.id);
         if (!response.export) {
           return h.redirect('/abs/{id}')
