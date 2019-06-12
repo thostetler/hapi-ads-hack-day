@@ -76,9 +76,9 @@ const init = async () => {
       if (!response.response) {
         return h.redirect('/');
       }
-      const response_sources = await api.sourceSearch(request.params.id);
+      let response_sources = await api.sourceSearch(request.params.id);
       if (!response_sources.links) {
-        return h.redirect('/');
+        response_sources = { links: { records: [] } };
       }
       const { numFound, docs } = responseParser.parseAbstract(response.response);
       let sources = [];
