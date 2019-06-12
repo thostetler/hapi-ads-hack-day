@@ -19,7 +19,15 @@
                 <br>
                 <strong>Bibcode:</strong> <%= doc.bibcode %>
                 <br>
-                <a href="<%= "https://ui.adsabs.harvard.edu/abs/".concat(doc.bibcode) %>">Link to rich search version</a>
+                <a href="/search?q=citations(<%= doc.bibcode %>)&s=first_author asc">Citations (<%= doc.citation_count %>)</a>
+                |
+                <a href="/search?q=references(<%= doc.bibcode %>)&s=first_author asc">References</a>
+                |
+                <a href="https://ui.adsabs.harvard.edu/link_gateway/{{ doc.bibcode }}/ESOURCE">Sources</a>
+                |
+                <a href="/abs/<%= doc.bibcode %>/export">BibTeX</a>
+                <br>
+                <a href="<%= 'https://ui.adsabs.harvard.edu/abs/'.concat(doc.bibcode) %>">Link to rich search version</a>
             </p>
         </div>
       <% } %>
