@@ -75,6 +75,22 @@ const init = async () => {
   });
 
   server.route({ method: 'GET', path:'/search', handler: require('./lib/handlers/search') });
+  server.route({
+      method: 'GET',
+      path: '/abs/{id}/export',
+      handler: async (request, h) => {
+        const response = await api.exportSearch(request.params.id);
+        if (!response.export) {
+          return h.redirect('/abs/{id}')
+        }
+        const exportcite = response.export;
+        return h.view('export', {
+            page: 'export',
+            title: 'export',
+            exportcite
+        });
+  }
+  });
 
   await server.start();
   console.log('Server running on %s', server.info.uri);
