@@ -54,7 +54,7 @@ const init = async () => {
         path: 'public'
       }
     }
-  })
+  });
 
   server.route({
     method: 'GET',
