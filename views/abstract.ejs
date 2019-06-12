@@ -22,9 +22,14 @@
                 |
                 <a href="/search?q=references(<%= doc.bibcode %>)&s=first_author asc">References</a>
                 |
-                <a href="https://ui.adsabs.harvard.edu/link_gateway/{{ doc.bibcode }}/ESOURCE">Sources</a>
-                |
                 <a href="/abs/<%= doc.bibcode %>/export">BibTeX</a>
+                <br>
+                <strong>Full text links:</strong>
+                    <% for (let source of sources) { %>
+                    <br>
+                    <a href="<%= source.url %>"><%= source.link_type %></a>
+                    <% } %>
+                <br>
                 <br>
                 <a href="<%= 'https://ui.adsabs.harvard.edu/abs/'.concat(doc.bibcode) %>">Link to rich search version</a>
             </p>
