@@ -74,11 +74,11 @@ const init = async () => {
       await api.confirmSessionToken(request.yar);
       const response = await api.abstractSearch(request.params.id);
       if (!response.response) {
-        return
+        return h.redirect('/');
       }
       const response_sources = await api.sourceSearch(request.params.id);
       if (!response_sources.links) {
-        return response_sources.links.records = []
+        return h.redirect('/');
       }
       const { numFound, docs } = responseParser.parseAbstract(response.response);
       const sources = response_sources.links.records;

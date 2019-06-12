@@ -12,13 +12,16 @@ block content
               p.is-5.is-size-7-mobile
                 strong Sort By
                 span.is-pulled-right
-                  a() asc
+                  if selectedSortDir === 'desc'
+                    a.is-size-7-mobile(href=`/search?q=${query.q}&s=${selectedSort} asc`).is-size-6 asc
+                  else
+                    a.is-size-7-mobile(href=`/search?q=${query.q}&s=${selectedSort} desc`).is-size-6 desc
               each sort in sortOptions
                 p
                   if sort.id === selectedSort
                     p.is-size-7-mobile.has-text-weight-medium.is-size-6=sort.text
                   else
-                    a.is-size-7-mobile(href=`/search?q=${query.q}&s=${sort.id} desc`).is-size-6()=sort.text
+                    a.is-size-7-mobile(href=`/search?q=${query.q}&s=${sort.id} desc`).is-size-6=sort.text
       main.column
         .tile.is-ancestor
           .tile.is-vertical.is-parent
@@ -27,6 +30,6 @@ block content
                 .columns.is-mobile.is-size-7-mobile.is-variable.is-1-mobile
                   .column=doc.bibcode
                   .column.has-text-right=doc.pubdate
-                  .column.has-text-right cited: #{doc.citation_count}
+                  .column.has-text-right=doc.citation_count && doc.citation_count > 0 ? `cited: ${doc.citation_count}` : ''
                 p.has-text-weight-medium.is-size-7-mobile=doc.title
                 p.is-size-7-mobile=doc.author
