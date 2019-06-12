@@ -77,11 +77,11 @@ const init = async () => {
         return
       }
       const response_sources = await api.sourceSearch(request.params.id);
-      if (!response_sources.links) {
-        return response_sources.links.records = []
-      }
       const { numFound, docs } = responseParser.parseAbstract(response.response);
-      const sources = response_sources.links.records;
+      let sources = [];
+      if (response_sources.links) {
+        sources = response_sources.links.records;
+      }
       return h.view('abstract', {
         page: 'abstract',
         title: 'abstract',
@@ -94,21 +94,20 @@ const init = async () => {
 
   server.route({ method: 'GET', path:'/search', handler: require('./lib/handlers/search') });
   server.route({
-      method: 'GET',
-      path: '/abs/{id}/export',
-      handler: async (request, h) => {
-        await api.confirmSessionToken(request.yar);
-        const response = await api.exportSearch(request.params.id);
-        if (!response.export) {
-          return h.redirect('/abs/{id}')
-        }
-        const exportcite = response.export;
-        return h.view('export', {
-            page: 'export',
-            title: 'export',
-            exportcite
-        });
-  }
+    method: 'GET',
+    path: '/abs/{id}/export',
+    handler: async (request, h) => {
+      const response = await api.exportSearch(request.params.id);
+      if (!response.export) {
+        return h.redirect('/abs/{id}')
+      }
+      const exportcite = response.export;
+      return h.view('export', {
+        page: 'export',
+        title: 'export',
+        exportcite
+      });
+    }
   });
 
   await server.start();
