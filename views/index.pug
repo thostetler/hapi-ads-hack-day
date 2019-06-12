@@ -6,5 +6,5 @@ block content
       form(action='/search', method='GET')
         .field
           .control
-            input.input.is-large(type='text', name='q', placeholder='search for something...', value=query.q, autofocus='')
-            input(type='hidden', name='s', value='date desc')
+            input.input.is-large(type='text', name='q', placeholder='search for something...', value=query.q, autofocus)
+            input(type='hidden', name='s', value=query.s || 'date desc')

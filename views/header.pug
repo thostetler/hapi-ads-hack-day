@@ -1,11 +1,10 @@
-- var isSearchPage = page === 'search'
 nav.navbar.is-dark(role='navigation', aria-label='main navigation')
   .navbar-brand
     a.navbar-item(href='/')
       img(src='https://ui.adsabs.harvard.edu/styles/img/transparent_logo.svg', width='50', height='28')
       | ADS
   .navbar-menu
-    unless isSearchPage
-      form.navbar-item.is-expanded(method='GET', action='/search')
-        input.input(type='text', name='q', placeholder='search for something...', value='<%= query.q %>', autofocus='')
-        input(type='hidden', name='s', value='date desc')
+    if page === 'search'
+      form.navbar-item.is-expanded.is-marginless(method='GET', action='/search')
+        input.input(type='text', name='q', placeholder='search for something...', value=query.q, autofocus)
+        input(type='hidden', name='s', value=query.s || 'date desc')
