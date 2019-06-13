@@ -76,21 +76,12 @@ const init = async () => {
       if (!response.response) {
         return h.redirect('/');
       }
-      let response_sources = await api.sourceSearch(request.params.id);
-      if (!response_sources.links) {
-        response_sources = { links: { records: [] } };
-      }
       const { numFound, docs } = responseParser.parseAbstract(response.response);
-      let sources = [];
-      if (response_sources.links) {
-        sources = response_sources.links.records;
-      }
       return h.view('abstract', {
         page: 'abstract',
         title: 'abstract',
         query: request.query,
-        docs,
-        sources
+        docs
       });
     }
   });
