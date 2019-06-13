@@ -9,7 +9,13 @@ block content
     .container
       each doc in docs
         p.title=doc.title
-        p=doc.author
+        if doc.author
+          for author, idx in doc.author
+            if idx === doc.author.length - 1
+              a(href=`/search?q=author:"${author}"&s=date desc`) #{author}
+            else
+              a(href=`/search?q=author:"${author}"&s=date desc`) #{author}
+              | ; 
         +sect('Abstract', doc.abstract)
         +sect('Publication', doc.pub_raw)
         +sect('Publication Date', doc.pubdate)
@@ -23,11 +29,11 @@ block content
               a(href=`/search?q=references(${doc.bibcode})&s=first_author asc`) References
             .column
               a(href=`/abs/${doc.bibcode}/export`) BibTeX
-        if sources.length > 0
+        if doc.sources.length > 0
           hr.hr
           p.has-text-weight-medium.is-size-5 Full text sources
             .columns
-              each source in sources
+              each source in doc.sources
                 .column
-                  a(href=`${source.url}`) #{source.link_type}
+                  a(href=`https://ui.adsabs.harvard.edu/link_gateway/${doc.bibcode}/${source.type}`) #{source.name}
 
